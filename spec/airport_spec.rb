@@ -18,11 +18,14 @@ describe Airport do
   describe 'release_plane' do
     it { is_expected.to respond_to(:release_plane).with(1).argument }
 
-    #xit 'instructs a plane to take off'
-  #   NEED TO ADD TEST THAT CHECKS THAT THIS METHOD TRIGGERS THE PLANE.TAKEOFF METHOD?
-  #   CAN'T FIGURE OUT HOW TO WRITE THAT TEST IN RSPEC.
-
-    #xit 'releases a plane'
+    it 'instructs a plane to take off' do
+      # SETUP
+      plane = Plane.new
+      # EXPECTATION ABOUT THE FUTURE
+      expect(plane).to receive :takeoff
+      # ACTION
+      subject.release_plane(plane)
+    end
   end
 
 
@@ -33,6 +36,7 @@ describe Airport do
     it 'raises an error when full' do
       allow(subject).to receive(:stormy?).and_return(false)
       subject.capacity.times { subject.receive_plane Plane.new }
+
       expect { subject.receive_plane Plane.new }.to raise_error 'Airport is full'
     end
 
