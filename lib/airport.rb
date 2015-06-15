@@ -1,13 +1,16 @@
 require_relative 'plane'
 
 class Airport
-
   attr_accessor :capacity
 
   def initialize
     @capacity = 20
     @planes = []
+  end
 
+  def planes
+    planes_reader_count += 1
+    @planes
   end
 
   def receive_plane plane
@@ -17,7 +20,6 @@ class Airport
     #plane.land_authorised
     plane.land
     @planes << plane
-   
   end
 
   def release_plane(plane)
