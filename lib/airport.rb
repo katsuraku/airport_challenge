@@ -12,7 +12,7 @@ class Airport
 
   def receive_plane plane
     fail 'Airport is full' if full?
-    fail 'Cannot land due to weather' if weather? == "stormy"
+    fail 'Cannot land due to weather' if stormy?
 
     #plane.land_authorised
     plane.land
@@ -30,15 +30,10 @@ class Airport
     @planes.count >= capacity
   end
 
-  def weather?
+  def stormy?
     x = rand(6)
-    return "stormy" if x  <=1
-    return "sunny" if x > 1
-
+    return true  if x <= 1
+    return false if x >  1
   end
-
-
-
-
 
 end

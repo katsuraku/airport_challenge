@@ -31,7 +31,7 @@ describe Airport do
     it { is_expected.to respond_to(:receive_plane).with(1).argument }
 
     it 'raises an error when full' do
-      # allow(subject).to receive(:full?) { false }
+      allow(subject).to receive(:stormy?).and_return(false)
       subject.capacity.times { subject.receive_plane Plane.new }
       expect { subject.receive_plane Plane.new }.to raise_error 'Airport is full'
     end
