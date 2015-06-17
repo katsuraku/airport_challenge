@@ -14,13 +14,13 @@ require 'airport'
 describe Airport do
 
   it { is_expected.to respond_to(:capacity) }
+  let(:plane) { double(:plane, { land: 'argument placeholder' }) }
 
   describe 'release_plane' do
     it { is_expected.to respond_to(:release_plane).with(1).argument }
 
     it 'instructs a plane to take off' do
       # SETUP
-      plane = double :plane
       # EXPECTATION ABOUT THE FUTURE
       expect(plane).to receive :takeoff
       # ACTION
@@ -34,27 +34,21 @@ describe Airport do
 
     it 'raises an error when full' do
       allow(subject).to receive(:stormy?).and_return(false)
-      subject.capacity.times { subject.receive_plane Plane.new }
+      subject.capacity.times { subject.receive_plane plane }
 
-      expect { subject.receive_plane Plane.new }.to raise_error 'Airport is full'
+      expect { subject.receive_plane plane }.to raise_error 'Airport is full'
     end
 
     it 'raises an error when weather is stormy' do
       allow(subject).to receive(:stormy?).and_return true
-      expect {subject.receive_plane Plane.new }.to raise_error 'Cannot land due to weather'
+      expect {subject.receive_plane plane }.to raise_error 'Cannot land due to weather'
     end
 
-    #  NEED TO FIND OUT HOW TO DEAL WITH CONFLICTING TESTS. WHEN BOTH 'FAILS'
-    #  ARE TOGETHER THEY DON'T WORK PROPERLY
+    it 'adds a landed plane into the array of planes' do
+      allow(subject).to receive(:stormy?).and_return(false)
+      expect { subject.receive_plane plane }.to change{ subject.planes.size }.from(0).to(1)
+    end 
 
-    #   NEED TO ADD TEST THAT CHECKS THAT THE RECEIVE_PLANE METHOD TRIGGERS THE PLANE.LAND METHOD?
-    #   CAN'T FIGURE OUT HOW TO WRITE THAT TEST IN RSPEC.
-
-    #   NEED TO ADD TEST TO CHECK WHETHER RECEIVE_PLANE ADDS THAT PLANE INTO THE ARRAY OF PLANES
-    #   IT WORKS IN IRB BUT DON'T KNOW HOW TO PHRASE THE TEST IN RSPEC.
-    # it 'adds a landed plane into the array of planes' do
-    #   expect { subject.receive_plane }.to change{ @planes.size }.from(0).to(1)
-    # end 
   end
   
 end

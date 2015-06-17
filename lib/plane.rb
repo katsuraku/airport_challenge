@@ -1,11 +1,12 @@
 require_relative 'airport'
 
 class Plane
+  # try to refactor: access instance variables via reader / writer methods, rather than directly
+  # try to keep your code clean and free of lengthy comments.
 
 
   def initialize
     @flying = true
-   # @land_authorised = false
   end
 
   # attr_reader :flying
@@ -37,18 +38,5 @@ class Plane
   # NEED TO MAKE THIS CONDITIONAL ON THE AIRPORT
   # METHOD RELEASE_PLANE BEING CALLED
   # if airport.release_plane(plane) DOESNT WORK.
-
-  # def land_athorised?
-  #   @land_authorised
-  # end
-
-  # def land_authorised
-  #   @land_authorised = true
-  # end
-
-  # def land_authorised_over
-  #   @land_authorised = false
-  # end
-
 
 end
